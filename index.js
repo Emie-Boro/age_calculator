@@ -20,6 +20,15 @@ app.get('/', (req,res)=>{
     })
 })
 
+app.get('/date/', (req,res)=>{
+    res.json({
+        Urls:{
+            slash_separated: '/date/year/month/day',
+            iso: '/date/year-month-day'
+        }
+    })
+})
+
 app.get('/date/:y/:m/:d', (req,res)=>{
     try {
         const dateOfBirth = {
@@ -32,10 +41,16 @@ app.get('/date/:y/:m/:d', (req,res)=>{
         const birthDay = targetDate.getDate()
         const birthMonth = targetDate.toLocaleString('en-NG', { month: 'long' });
         const ageInMillisecond = date - targetDate;
-        const age = Math.floor(ageInMillisecond / (1000 * 60 * 60 * 24 * 365.25))
+        const ageInYears = ageInMillisecond / (1000 * 60 * 60 * 24 * 365.25)
+        const years = Math.floor(ageInYears)
+        const month = Math.floor((ageInYears - years) * 12)
+        const days = Math.floor((ageInYears - years) * 365.25 % 30.44)
 
         res.status(200).json({
             age: age,
+            years: years,
+            month: month,
+            days: days,
             birthDay: `${birthMonth} ${birthDay}`,
             dateOfBirth: targetDate.toDateString(),
             isBirthDayToday: date.getMonth() == targetDate.getMonth() && date.getDate() == birthDay ? true : false
@@ -57,10 +72,16 @@ app.get('/date/:y-:m-:d', (req,res)=>{
         const birthDay = targetDate.getDate()
         const birthMonth = targetDate.toLocaleString('en-NG', { month: 'long' });
         const ageInMillisecond = date - targetDate;
-        const age = Math.floor(ageInMillisecond / (1000 * 60 * 60 * 24 * 365.25))
+        const ageInYears = ageInMillisecond / (1000 * 60 * 60 * 24 * 365.25)
+        const years = Math.floor(ageInYears)
+        const month = Math.floor((ageInYears - years) * 12)
+        const days = Math.floor((ageInYears - years) * 365.25 % 30.44)
 
         res.status(200).json({
             age: age,
+            years: years,
+            month: month,
+            days: days,
             birthDay: `${birthMonth} ${birthDay}`,
             dateOfBirth: targetDate.toDateString(),
             isBirthDayToday: date.getMonth() == targetDate.getMonth() && date.getDate() == birthDay ? true : false
