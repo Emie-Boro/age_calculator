@@ -47,7 +47,6 @@ app.get('/date/:y/:m/:d', (req,res)=>{
         const days = Math.floor((ageInYears - years) * 365.25 % 30.44)
 
         res.status(200).json({
-            age: age,
             years: years,
             month: month,
             days: days,
@@ -78,7 +77,6 @@ app.get('/date/:y-:m-:d', (req,res)=>{
         const days = Math.floor((ageInYears - years) * 365.25 % 30.44)
 
         res.status(200).json({
-            age: age,
             years: years,
             month: month,
             days: days,
